@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', Arial, Helvetica, sans-serif; 
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --primary: 220 90% 56%; 
+    --primary-foreground: 0 0% 100%;
+    --accent: 280 65% 60%; 
+    --accent-foreground: 0 0% 100%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222 47% 5%;
+    --foreground: 0 0% 98%;
+    --card: 222 47% 7%;
+    --card-foreground: 0 0% 98%;
+    --primary: 210 80% 60%;
+    --primary-foreground: 0 0% 100%;
+    --accent: 290 70% 60%;
+    --accent-foreground: 0 0% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border transition-colors duration-300;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer utilities {
+  
+  .gradient {
+    @apply bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500;
+  }
+  .gradient-title {
+    @apply gradient font-extrabold tracking-tighter text-transparent bg-clip-text pb-2 pr-2 drop-shadow-lg;
+  }
+
+  
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rounded-2xl;
+  }
+
+
+  .hover-float {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .hover-float:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  }
+}
+
+
+
+.hero-image-wrapper {
+  perspective: 1500px;
+  overflow: hidden;
+}
+
+.hero-image {
+  transform: translateY(0) scale(1);
+  transition: transform 0.6s ease, filter 0.6s ease;
+  will-change: transform, filter;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.25));
+}
+
+
+.hero-image.scrolled {
+  transform: translateY(40px) scale(1.05) rotateX(4deg) rotateY(-3deg);
+  filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.35))
+          brightness(1.08) saturate(1.15);
+  animation: glowPulse 4s ease-in-out infinite alternate;
+}
+
+/* Glow pulse animation */
+@keyframes glowPulse {
+  0% {
+    filter: drop-shadow(0 15px 25px rgba(59,130,246,0.4)) brightness(1.05) saturate(1.1);
+  }
+  100% {
+    filter: drop-shadow(0 25px 40px rgba(168,85,247,0.5)) brightness(1.1) saturate(1.25);
+  }
+}
+
+
+.grid-background {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(
+      to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px
+    ),
+    linear-gradient(
+      to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px
+    );
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: -1;
+  animation: moveGrid 20s linear infinite;
+}
+
+.grid-background::before {
+  content: "";
+  position: absolute; 
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle, transparent, rgba(0, 0, 0, 0.8));
+}
+
+@keyframes moveGrid {
+  from { background-position: 0 0; }
+  to { background-position: 60px 60px; }
+}
